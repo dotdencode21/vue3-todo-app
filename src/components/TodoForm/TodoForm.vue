@@ -3,18 +3,46 @@
     <h2 class="todo-form-title">Todo App on Vue.js</h2>
     <div class="todo-form-controls">
       <input 
+        v-model="currentTodo"
         type="text" 
-        placeholder="Your todo is?"
+        placeholder="E.g. buy milk"
       />
       <button 
         type="button"
+        @click="addTodo"
       >Add</button>
     </div>
   </div>
+  <div v-for="todo in todos">
+      <TodoItem 
+        :key="todo.id"
+        :todo="todo"
+        @deleteTodo="deleteTodo"
+      />
+    </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import TodoItem from "../TodoItem/TodoItem.vue";
 
+const currentTodo = ref("");
+const todos = ref([]);
+
+const addTodo = () => {
+  const newTodo = {
+    id: Math.random() * 1000,
+    checked: false,
+    description: currentTodo.value || "Text"
+  }
+
+  todos.value.push(newTodo);
+  currentTodo.value = "";
+}
+
+const deleteTodo = todoId => {
+  todos.value = todos.value.filter(todo => todo.id !== todoId);
+}
 </script>
 
 <style scoped>

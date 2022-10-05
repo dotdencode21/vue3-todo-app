@@ -2,18 +2,32 @@
   <div class="todo-item-wrapper">
     <div class="todo-item-body">
       <div class="todo-item-info">
-        <input type="checkbox" />
-        <span>Text</span>
+        <input
+          v-model="todo.checked"
+          type="checkbox" 
+        />
+        <span :class="{ completed: todo.checked }">{{ todo.description }}</span>
       </div>
       <div class="todo-item-btn">
-        <button type="button">Delete</button>
+        <button
+          @click="handleDeleteTodo"
+          type="button"
+        >Delete</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+const props = defineProps({
+  todo: {
+    type: Object
+  }
+});
 
+const emit = defineEmits(["deleteTodo"]);
+
+const handleDeleteTodo = () => emit("deleteTodo", props.todo.id);
 </script>
 
 <style scoped>
@@ -47,6 +61,10 @@
   .todo-item-info span {
     font-size: 18px;
     letter-spacing: 1px;
+  }
+
+  .completed {
+    text-decoration: line-through;
   }
 
   .todo-item-btn button {
