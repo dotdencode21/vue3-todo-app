@@ -6,7 +6,7 @@
           v-model="todo.checked"
           type="checkbox" 
         />
-        <span :class="{ completed: todo.checked }">{{ todo.description }}</span>
+        <span :class="{ 'completed': todo.checked }">{{ todo.description }}</span>
       </div>
       <div class="todo-item-btn">
         <button
@@ -59,6 +59,9 @@ const handleDeleteTodo = () => emit("deleteTodo", props.todo.id);
   }
 
   .todo-item-info span {
+    height: auto;
+    padding: 3px;
+    width: 250px;
     font-size: 18px;
     letter-spacing: 1px;
   }

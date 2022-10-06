@@ -13,13 +13,15 @@
       >Add</button>
     </div>
   </div>
-  <div v-for="todo in todos">
-      <TodoItem 
-        :key="todo.id"
-        :todo="todo"
-        @deleteTodo="deleteTodo"
-      />
-    </div>
+  <div class="empty-todo-list" v-if="!todos.length">
+    <h3>Todo list is empty!</h3>
+  </div>
+  <TodoItem 
+    v-for="todo in todos"
+    :key="todo.id"
+    :todo="todo"
+    @deleteTodo="deleteTodo"
+  />
 </template>
 
 <script setup>
@@ -33,7 +35,7 @@ const addTodo = () => {
   const newTodo = {
     id: Math.random() * 1000,
     checked: false,
-    description: currentTodo.value || "Text"
+    description: currentTodo.value || "Text",
   }
 
   todos.value.push(newTodo);
@@ -80,5 +82,11 @@ const deleteTodo = todoId => {
     border-radius: 10px;
     cursor: pointer;
     border: 1px solid #808080;
+  }
+
+  .empty-todo-list {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
   }
 </style>
